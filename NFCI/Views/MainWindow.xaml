@@ -1,0 +1,29 @@
+﻿<Window
+    x:Class="NFCI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:NFCI"
+    mc:Ignorable="d"
+    Title="NFCI"
+    Height="300"
+    Width="600">
+    <StackPanel Margin="16">
+        <TextBlock
+            FontWeight="Bold"
+            Text="Reader status" />
+        <TextBlock
+            Margin="0,4,0,16"
+            Text="{Binding Status}"
+            TextWrapping="Wrap" />
+
+        <TextBlock
+            FontWeight="Bold"
+            Text="Last tag" />
+        <TextBlock
+            Margin="0,4,0,0"
+            Text="{Binding TagDetails}"
+            TextWrapping="Wrap" />
+    </StackPanel>
+</Window>
