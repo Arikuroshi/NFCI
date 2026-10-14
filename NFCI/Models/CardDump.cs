@@ -17,5 +17,9 @@ namespace NFCI.Models
         public byte Sak { get; set; }
         public DateTime ScannedAt { get; set; }
         public List<MemoryPage> Memory { get; set; } = [];
+        public List<int> SectorsWithoutAcceptedKey { get; set; } = [];
+        public List<int> UnreadablePages { get; set; } = [];
+        public List<int> UnreadableBlocks { get; set; } = [];
+        public TagFamily Family { get; set; } = TagFamily.Unknown;
     }
 }

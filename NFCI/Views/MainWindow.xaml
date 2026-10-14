@@ -7,23 +7,80 @@
     xmlns:local="clr-namespace:NFCI"
     mc:Ignorable="d"
     Title="NFCI"
-    Height="300"
-    Width="600">
-    <StackPanel Margin="16">
-        <TextBlock
-            FontWeight="Bold"
-            Text="Reader status" />
-        <TextBlock
-            Margin="0,4,0,16"
-            Text="{Binding Status}"
-            TextWrapping="Wrap" />
+    Height="430"
+    Width="640">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="16">
+            <TextBlock
+                FontSize="18"
+                FontWeight="Bold"
+                Text="NFC Reader" />
 
-        <TextBlock
-            FontWeight="Bold"
-            Text="Last tag" />
-        <TextBlock
-            Margin="0,4,0,0"
-            Text="{Binding TagDetails}"
-            TextWrapping="Wrap" />
-    </StackPanel>
+            <TextBlock
+                Margin="0,4,0,16"
+                Text="{Binding Status}"
+                TextWrapping="Wrap" />
+
+            <Border
+                Padding="12"
+                Background="#F2F4F7"
+                CornerRadius="6">
+                <StackPanel>
+                    <DockPanel Margin="0,0,0,12">
+                        <TextBlock
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Text="Last tag" />
+
+                        <TextBlock
+                            DockPanel.Dock="Right"
+                            FontWeight="Bold"
+                            Text="{Binding TagReadStatus}" />
+                    </DockPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,0,12,8"
+                            FontWeight="SemiBold"
+                            Text="Tag type" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="0,0,0,8"
+                            Text="{Binding TagType}"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="0,0,12,8"
+                            FontWeight="SemiBold"
+                            Text="UID" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="0,0,0,8"
+                            Text="{Binding TagId}"
+                            TextWrapping="Wrap" />
+                    </Grid>
+
+                    <TextBlock
+                        Margin="0,4,0,0"
+                        Text="{Binding TagDetails}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
 </Window>

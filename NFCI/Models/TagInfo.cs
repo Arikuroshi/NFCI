@@ -10,5 +10,7 @@ namespace NFCI.Models
         string ReaderName,
         string Uid,
         string? Ats,
-        string? Atr);
+        string? Atr,
+        string? Atqa = null,
+        byte? Sak = null);
 }
