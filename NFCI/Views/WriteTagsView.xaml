@@ -1,0 +1,91 @@
+<UserControl
+    x:Class="NFCI.Views.WriteTagsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            FontSize="18"
+            FontWeight="Bold"
+            Text="Write to NFC tag" />
+
+        <TextBlock
+            Grid.Row="1"
+            Margin="0,6,0,0"
+            Text="{Binding TagSummary}"
+            TextWrapping="Wrap" />
+
+        <StackPanel Grid.Row="2" Margin="0,12,0,8">
+            <TextBlock FontWeight="SemiBold" Text="Payload" />
+            <TextBox
+                Margin="0,6,0,0"
+                MinHeight="52"
+                AcceptsReturn="True"
+                TextWrapping="Wrap"
+                VerticalScrollBarVisibility="Auto"
+                Text="{Binding PayloadHex, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox
+                Margin="0,6,0,0"
+                Content="Input is UTF-8 text (unchecked means hexadecimal)"
+                IsChecked="{Binding PayloadIsText, UpdateSourceTrigger=PropertyChanged}" />
+            <Button
+                Margin="0,8,0,0"
+                Width="140"
+                HorizontalAlignment="Left"
+                Content="Write to tag"
+                IsEnabled="{Binding CanWrite}"
+                Click="WriteSelected_Click" />
+        </StackPanel>
+
+        <DataGrid
+            Grid.Row="3"
+            ItemsSource="{Binding Units}"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            HeadersVisibility="Column">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Select" Width="60">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox
+                                HorizontalAlignment="Center"
+                                IsChecked="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                IsEnabled="{Binding IsWritable}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn
+                    Header="Address"
+                    Binding="{Binding Address}"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Header="Unit"
+                    Binding="{Binding Label}"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Header="Current data"
+                    Binding="{Binding CurrentDataHex}"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Header="Protection"
+                    Binding="{Binding ProtectionReason}"
+                    IsReadOnly="True"
+                    Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock
+            Grid.Row="4"
+            Margin="0,8,0,0"
+            Foreground="#666"
+            Text="{Binding WriteStatus}"
+            TextWrapping="Wrap" />
+    </Grid>
+</UserControl>

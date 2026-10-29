@@ -4,83 +4,52 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:NFCI"
+    xmlns:views="clr-namespace:NFCI.Views"
     mc:Ignorable="d"
     Title="NFCI"
-    Height="430"
-    Width="640">
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="16">
-            <TextBlock
-                FontSize="18"
-                FontWeight="Bold"
-                Text="NFC Reader" />
+    Height="560"
+    Width="860"
+    MinHeight="480"
+    MinWidth="700">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="E_xit" Click="ExitMenuItem_Click" />
+            </MenuItem>
 
-            <TextBlock
-                Margin="0,4,0,16"
-                Text="{Binding Status}"
-                TextWrapping="Wrap" />
+            <MenuItem Header="_View">
+                <MenuItem Header="_Read tags" Click="ReadTagsMenuItem_Click" />
+                <MenuItem Header="_Write tags" Click="WriteTagsMenuItem_Click" />
+                <MenuItem Header="_Loan system" Click="LoanSystemMenuItem_Click" />
+            </MenuItem>
 
-            <Border
-                Padding="12"
-                Background="#F2F4F7"
-                CornerRadius="6">
-                <StackPanel>
-                    <DockPanel Margin="0,0,0,12">
-                        <TextBlock
-                            FontSize="16"
-                            FontWeight="Bold"
-                            Text="Last tag" />
+            <MenuItem Header="_Tools">
+                <MenuItem Header="_Manage keys" IsEnabled="False" />
+            </MenuItem>
 
-                        <TextBlock
-                            DockPanel.Dock="Right"
-                            FontWeight="Bold"
-                            Text="{Binding TagReadStatus}" />
-                    </DockPanel>
+            <MenuItem Header="_Database">
+                <MenuItem Header="_Configure connection..." Click="ConfigureDatabaseMenuItem_Click" />
+            </MenuItem>
 
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="110" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About" Click="AboutMenuItem_Click" />
+            </MenuItem>
+        </Menu>
 
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Margin="0,0,12,8"
-                            FontWeight="SemiBold"
-                            Text="Tag type" />
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Margin="0,0,0,8"
-                            Text="{Binding TagType}"
-                            TextWrapping="Wrap" />
+        <TabControl
+            x:Name="MainTabs"
+            Margin="12">
+            <TabItem Header="Read tags">
+                <views:ReadTagsView DataContext="{Binding ReadTags}" />
+            </TabItem>
 
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Margin="0,0,12,8"
-                            FontWeight="SemiBold"
-                            Text="UID" />
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Margin="0,0,0,8"
-                            Text="{Binding TagId}"
-                            TextWrapping="Wrap" />
-                    </Grid>
+            <TabItem Header="Write tags">
+                <views:WriteTagsView DataContext="{Binding WriteTags}" />
+            </TabItem>
 
-                    <TextBlock
-                        Margin="0,4,0,0"
-                        Text="{Binding TagDetails}"
-                        TextWrapping="Wrap" />
-                </StackPanel>
-            </Border>
-        </StackPanel>
-    </ScrollViewer>
+            <TabItem Header="Loan system">
+                <views:LoanSystemView DataContext="{Binding LoanSystem}" />
+            </TabItem>
+        </TabControl>
+    </DockPanel>
 </Window>

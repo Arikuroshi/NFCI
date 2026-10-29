@@ -19,6 +19,10 @@ namespace NFCI.ViewModels
         private string _tagDetails = "Place a tag on the reader.";
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        public event Action<CardDump>? DumpAvailable;
+
+        public IList<string> AdditionalMifareClassicKeys =>
+            _reader.AdditionalMifareClassicKeys;
 
         public string Status
         {
@@ -148,6 +152,7 @@ namespace NFCI.ViewModels
                     $"ATR: {FormatHex(dump.Atr)}{Environment.NewLine}" +
                     $"ATQA: {FormatHex(dump.Atqa)}{Environment.NewLine}" +
                     $"SAK: {dump.Sak.ToString("X2") ?? "Not reported"}{Environment.NewLine}";
+                DumpAvailable?.Invoke(dump);
             });
         }
 
