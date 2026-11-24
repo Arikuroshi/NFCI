@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using NFCI.Views;
 using NFCI.ViewModels;
 
 namespace NFCI
@@ -39,15 +40,31 @@ namespace NFCI
             MainTabs.SelectedIndex = 2;
         }
 
-        private void ConfigureDatabaseMenuItem_Click(object sender, RoutedEventArgs e)
+        private async void ConfigureDatabaseMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            var dialog = new DatabaseConnectionDialog
+            {
+                Owner = this
+            };
+
+            if (dialog.ShowDialog() != true || dialog.Options is null)
+            {
+                return;
+            }
+
             MainTabs.SelectedIndex = 2;
-            _viewModel.LoanSystem.ConnectionStatus = "Configuration UI not implemented yet.";
-            MessageBox.Show(
-                "Database connection setup is not implemented yet.",
-                "Database Connection",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+
+            var connected = await _viewModel.LoanSystem.ConfigureDatabaseAsync(dialog.Options);
+
+            if (!connected)
+            {
+                MessageBox.Show(
+                    this,
+                    _viewModel.LoanSystem.LastError,
+                    "Database connection failed",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
         }
 
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)

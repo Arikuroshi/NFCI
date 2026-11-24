@@ -17,9 +17,11 @@ namespace NFCI.ViewModels
         private string _tagType = "No tag";
         private string _tagId = "—";
         private string _tagDetails = "Place a tag on the reader.";
+        private string _ndefText = "No NDEF UTF-8 text record found.";
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public event Action<CardDump>? DumpAvailable;
+        public event Action<TagInfo>? TagDetected;
 
         public IList<string> AdditionalMifareClassicKeys =>
             _reader.AdditionalMifareClassicKeys;
@@ -52,6 +54,12 @@ namespace NFCI.ViewModels
         {
             get => _tagDetails;
             private set => SetProperty(ref _tagDetails, value);
+        }
+
+        public string NdefText
+        {
+            get => _ndefText;
+            private set => SetProperty(ref _ndefText, value);
         }
 
         public MainViewModel()
@@ -122,6 +130,8 @@ namespace NFCI.ViewModels
                     $"Reader: {tag.ReaderName}{Environment.NewLine}" +
                     $"ATS: {FormatHex(tag.Ats)}{Environment.NewLine}" +
                     $"ATR: {FormatHex(tag.Atr)}";
+
+                TagDetected?.Invoke(tag);
             });
         }
 
@@ -153,6 +163,10 @@ namespace NFCI.ViewModels
                     $"ATQA: {FormatHex(dump.Atqa)}{Environment.NewLine}" +
                     $"SAK: {dump.Sak.ToString("X2") ?? "Not reported"}{Environment.NewLine}";
                 DumpAvailable?.Invoke(dump);
+
+                NdefText = NdefTextReader.TryReadText(dump, out var text)
+                    ? text
+                    : "No readable NDEF UTF-8 text record found.";
             });
         }
 
