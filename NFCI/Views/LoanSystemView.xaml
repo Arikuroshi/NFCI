@@ -53,9 +53,7 @@
                 <TextBlock FontWeight="SemiBold" Text="Register NFC tag" />
 
                 <TextBlock Margin="0,10,0,4" Text="Scanned UID" />
-                <TextBox
-                    IsReadOnly="True"
-                    Text="{Binding CurrentUid}" />
+                <TextBox Text="{Binding CurrentUid, Mode=OneWay}" IsReadOnly="True" />
 
                 <TextBlock Margin="0,10,0,4" Text="Name" />
                 <TextBox
